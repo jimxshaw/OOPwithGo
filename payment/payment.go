@@ -2,9 +2,15 @@ package payment
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"time"
 )
+
+// PaymentOption any interaction with accounts must go through this interface.
+type PaymentOption interface {
+	ProcessPayment(float32) bool
+}
 
 // CreditCard data structure
 type CreditCard struct {
@@ -25,6 +31,12 @@ func CreateCreditAccount(ownerName, cardNumber string, expirationMonth, expirati
 		expirationYear:  expirationYear,
 		securityCode:    securityCode,
 	}
+}
+
+// ProcessPayment takes in the amount that's being processed and return a boolean depending on whether or not the processing was successful.
+func (c *CreditCard) ProcessPayment(amount float32) bool {
+	fmt.Println("Processing a credit card payment...")
+	return true
 }
 
 // OwnerName getter
