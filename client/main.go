@@ -1,29 +1,22 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/jimxshaw/Gopay/payment"
 )
 
 func main() {
-	credit := payment.CreateCreditAccount(
+	var option payment.PaymentOption
+
+	option = payment.CreateCreditAccount(
 		"James Madison",
 		"1111-2222-3333-4444",
 		7,
 		2030,
-		777,
-	)
+		777)
 
-	fmt.Printf("Owner name: %v\n", credit.OwnerName())
-	fmt.Printf("Card number: %v\n", credit.CardNumber())
-	fmt.Println("Trying to change card number")
+	option.ProcessPayment(1000)
 
-	err := credit.SetCardNumber("invalid")
+	option = payment.CreateCashAccount()
 
-	if err != nil {
-		fmt.Printf("That didn't work: %v\n", err)
-	}
-
-	fmt.Printf("Available credit: %v\n", credit.AvailableCredit())
+	option.ProcessPayment(800)
 }
